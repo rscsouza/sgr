@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CursoSeeder::class,
             CidadeSeeder::class,
-            //MembroSeeder::class,
-            //BixoSeeder::class,
-            //MoradorSeeder::class,
-            //ExAlunoSeeder::class,
-            //RepublicaSeeder::class,
-            //FotoSeeder::class,
-            //VideoSeeder::class
+            MembroSeeder::class,
+            BixoSeeder::class,
+            MoradorSeeder::class,
+            ExAlunoSeeder::class,
+            RepublicaSeeder::class,
+            FotoSeeder::class,
+            VideoSeeder::class
         ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
     }

@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 area_container">
-          @component("componentes.cabecalho_modulo",["icone"=>"icone_membros","titulo"=>$titulo,"cadastroRota"=>"javascript:alert('Em desenvolvimento')"])
+          @component("componentes.cabecalho_modulo",["icone"=>"icone_membros","titulo"=>$titulo,"cadastroRota"=>route('cadastrar_membro')])
           @endcomponent
           <div class="alert alert-info">
             <div class="row">
@@ -59,15 +59,27 @@
                     @endif
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <select class="form-select form-select-sm opcoes_select" aria-label=".form-select-sm example">
                         <option selected>Selecione ação...</option>
                         @if($membro->perfil==0)
-                            <option value="1">Criar perfil de bixo</option>
+                            <option value="1" disabled>Criar perfil de bixo</option>
                         @endif
-                        <option value="2">Editar</option>
-                        <option value="3">Informar falecimento</option>
-                        <option value="4">Desativar</option>
-                        <option value="5">Excluir</option>
+                        <option value="{{route('formulario_editar_membro',['id'=>$membro->id])}}">Editar</option>
+                        <option value="{{route('falecido_membro',['id'=>$membro->id])}}">
+                            @if($membro->falecido)
+                                Remover falecimento
+                            @else
+                                Informar falecimento
+                            @endif
+                        </option>
+                        <option value="{{route('ativo_membro',['id'=>$membro->id])}}">
+                            @if($membro->ativo)
+                                Desativar
+                            @else
+                                Ativar
+                            @endif
+                        </option>
+                        <option value="{{route('excluir_membro',['id'=>$membro->id])}}">Excluir</option>
                       </select>
                 </div>
             </div>

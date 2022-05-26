@@ -23,3 +23,11 @@ $( "a" ).click(function( event ) {
 
 
 });
+
+$( ".opcoes_select" ).change(function( event ) {
+    destino=$(this).val();
+    $(".card").css('display','none');
+    $(".area_container").css('display','none');
+    $("#processando_solicitacao").css('display','block');
+    window.location.href = destino;
+});

@@ -35,10 +35,10 @@
         <a class="dropdown-item" href="#" onclick="javascript:alert('Em desenvolvimento'); event.preventDefault();">
             <img src="/imagens/icone_ex_alunos.png" style="width:16px;"/> Gerenciar Ex Alunos
         </a>
-        <a class="dropdown-item" href="#" onclick="javascript:alert('Em desenvolvimento'); event.preventDefault();">
+        <a class="dropdown-item" href="{{route('listar_moradores')}}">
             <img src="/imagens/icone_moradores.png" style="width:16px;"/> Gerenciar Moradores
         </a>
-        <a class="dropdown-item" href="#" onclick="javascript:alert('Em desenvolvimento'); event.preventDefault();">
+        <a class="dropdown-item" href="{{route('listar_bixos')}}">
             <img src="/imagens/icone_bixos.png" style="width:16px;"/> Gerenciar Bixos
         </a>
     </div>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Republica;
 use App\Models\Membro;
+use App\Models\Curso;
+use App\Models\Cidade;
 
 class MembroControlador extends Controller
 {
@@ -53,8 +55,10 @@ class MembroControlador extends Controller
             ->with('titulo','Cadastrar República');
         }
         else{
-            Session::flash('mensagem',Republica::MENSAGENS["cadastroComErro"]);
-            Session::flash('alert-danger', 'danger');
+            return view('membros.formulario_cadastrar_membro')
+            ->with('titulo','Cadastrar Membro')
+            ->with('cursos',Curso::cursos())
+            ->with('cidades',Cidade::cidades());
         }
         return redirect()->route('home');
     }
@@ -67,18 +71,18 @@ class MembroControlador extends Controller
      */
     public function cadastrar(Request $request)
     {
-        $cadastroEfetuado=Republica::cadastrar($request->all());
+        $cadastroEfetuado=Membro::cadastrar($request->all());
         Session::flash('mensagem',$cadastroEfetuado['msg']);
         if(!$cadastroEfetuado['status']){
             Session::flash('alert-danger', 'danger');
-            if(Republica::MENSAGENS["erroNumeroDeVagas"]==$cadastroEfetuado['msg']){
-                return redirect()->route('formulario_cadastrar_republica')->withInput();
+            if(Membro::MENSAGENS["existeMembroComApelido"]==$cadastroEfetuado['msg']){
+                return redirect()->route('formulario_cadastrar_membro')->withInput();
             }
         }
         else{
             Session::flash('alert-success', 'success');
         }
-        return redirect()->route('home');
+        return redirect()->route('listar_membros');
 
     }
 
@@ -101,10 +105,12 @@ class MembroControlador extends Controller
      */
     public function editar($id)
     {
-        $republica = Republica::recuperar($id);
-        return view('republica.formulario_editar_republica')
-            ->with('titulo','Editar República')
-            ->with(compact("republica"));
+        $membro = Membro::recuperar($id);
+        return view('membros.formulario_editar_membro')
+            ->with('titulo','Editar Membro')
+            ->with(compact("membro"))
+            ->with('cursos',Curso::cursos())
+            ->with('cidades',Cidade::cidades());
 
     }
 
@@ -118,18 +124,18 @@ class MembroControlador extends Controller
     public function alterar(Request $request)
     {
         //dd($request->all());
-        $cadastroAlterado=Republica::alterar($request->id,$request->all());
+        $cadastroAlterado=Membro::alterar($request->id,$request->all());
         Session::flash('mensagem',$cadastroAlterado['msg']);
         if(!$cadastroAlterado['status']){
             Session::flash('alert-danger', 'danger');
-            if(Republica::MENSAGENS["erroNumeroDeVagas"]==$cadastroAlterado['msg']){
-                return redirect()->route('formulario_editar_republica',['id'=>$request->id])->withInput();
+            if(Membro::MENSAGENS["existeMembroComApelido"]==$cadastroAlterado['msg']){
+                return redirect()->route('formulario_editar_membro',['id'=>$request->id])->withInput();
             }
         }
         else{
             Session::flash('alert-success', 'success');
         }
-        return redirect()->route('home');
+        return redirect()->route('listar_membros');
     }
 
     /**
@@ -140,7 +146,7 @@ class MembroControlador extends Controller
      */
     public function excluir($id)
     {
-        $cadastroExcluir=Republica::excluir($id);
+        $cadastroExcluir=Membro::excluir($id);
         Session::flash('mensagem',$cadastroExcluir['msg']);
         if(!$cadastroExcluir['status']){
             Session::flash('alert-danger', 'danger');
@@ -148,6 +154,30 @@ class MembroControlador extends Controller
         else{
             Session::flash('alert-success', 'success');
         }
-        return redirect()->route('home');
+        return redirect()->route('listar_membros');
+    }
+
+    public function falecido($id){
+        $falecido=Membro::falecido($id);
+        Session::flash('mensagem',$falecido['msg']);
+        if(!$falecido['status']){
+            Session::flash('alert-danger', 'danger');
+        }
+        else{
+            Session::flash('alert-success', 'success');
+        }
+        return redirect()->route('listar_membros');
+    }
+
+    public function ativo($id){
+        $ativo=Membro::ativo($id);
+        Session::flash('mensagem',$ativo['msg']);
+        if(!$ativo['status']){
+            Session::flash('alert-danger', 'danger');
+        }
+        else{
+            Session::flash('alert-success', 'success');
+        }
+        return redirect()->route('listar_membros');
     }
 }

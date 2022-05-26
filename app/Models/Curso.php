@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Curso extends Model
 {
     use HasFactory;
+
+    public static function cursos(){
+        return Curso::orderBy('nome','ASC')->get();
+    }
 }

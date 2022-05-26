@@ -67,10 +67,35 @@ Route::prefix('membros')->group(function () {
     ->name('alterar_membro');
 
     Route::get('/excluir/{id}',[App\Http\Controllers\MembroControlador::class, 'excluir'])
-    ->name('excluir_membro');
+    ->name('excluir_membro')
+    ->where('id', '[0-9]+');
+
+    Route::get('/falecido/{id}',[App\Http\Controllers\MembroControlador::class, 'falecido'])
+    ->name('falecido_membro')
+    ->where('id', '[0-9]+');
+
+    Route::get('/ativo/{id}',[App\Http\Controllers\MembroControlador::class, 'ativo'])
+    ->name('ativo_membro')
+    ->where('id', '[0-9]+');
 });
 
+Route::prefix('bixos')->group(function () {
 
+    Route::get('/',[App\Http\Controllers\BixoControlador::class, 'listar'])
+    ->name('listar_bixos');
+
+    Route::get('/promocao-bixo-a-morador/{id}',[App\Http\Controllers\BixoControlador::class, 'promocaoMorador'])
+    ->name('promocao_bixo_a_morador')
+    ->where('id', '[0-9]+');
+
+});
+
+Route::prefix('moradores')->group(function () {
+
+    Route::get('/',[App\Http\Controllers\MoradorControlador::class, 'listar'])
+    ->name('listar_moradores');
+
+});
 
 Auth::routes([
     'register' => false, // Registration Routes...

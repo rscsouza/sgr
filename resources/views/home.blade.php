@@ -58,7 +58,7 @@
             ['icone'=>'icone_moradores',
             'titulo'=>'Moradores',
             'descricao'=>'Gerenciar Moradores'
-            ,'link'=>"javascript:alert('Em desenvolvimento')"
+            ,'link'=>route('listar_moradores')
             ])
             @endcomponent
 
@@ -66,7 +66,7 @@
             ['icone'=>'icone_bixos',
             'titulo'=>'Bixos',
             'descricao'=>'Gerenciar Bixos'
-            ,'link'=>"javascript:alert('Em desenvolvimento')"
+            ,'link'=>route('listar_bixos')
             ])
             @endcomponent
 
